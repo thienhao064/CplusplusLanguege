@@ -1,0 +1,102 @@
+#include <iostream>
+using namespace std;
+
+int is_prime(int r) {
+    if (r < 2) return false;
+    for (int i = 2; i * i <= r; i++) {
+        if (r % i == 0) return false;
+    }
+    return true;
+}
+
+int main() {
+	// Nhập vào dãy số nguyên
+	int n, a[100];
+    cout << "Câu A.\n";
+    cout << "Nhập số phần tử: ";
+    cin >> n;
+
+
+    for (int i = 0 ; i < n ; i++) {
+        cout << "Nhập vào số thứ " << i+1 << ": ";
+        cin >> a[i];
+    } 
+	//Hiển thị dãy số ra màn hình
+    cout << "\n";
+    cout << "Mảng vừa nhập: [";
+    for (int i = 0 ; i < n ; i++) {
+        if (i != n - 1) {
+            cout << a[i] << ", ";
+        } else {
+           cout << a[i]; 
+        }
+    }
+    cout << "]\n\n";
+
+	//Nhập số nguyên x
+	int x, c, v[n];
+
+    cout << "Câu B.\n";
+    cout << "Nhập vào số x: ";
+    cin >> x; 
+
+    c = 0;
+    for (int i = 0; i < n; i++) {
+        if(a[i] == x) {
+            v[c++] = i;
+        }
+    }
+	//Số lần xuất hiện x và vị trí x trong dãy số
+    cout << "\n";
+    cout << "Số lần xuất hiện: " << c << "\n";
+    cout << "Xuất hiện ở các vị trí: ";
+    for (int i = 0; i < c; i++) {
+        cout << v[i] << ", ";
+    }
+    cout << "\n\n";
+
+	// Xoá các phần tử có giá trị bằng 0 trong mảng
+	n = remove(a, a + n, 0) - a;
+
+	// Hiển thị dãy số
+	cout << "Câu C. \n";
+	cout << "Dãy số khi đã xoá các giá trị bằng 0: ";
+	for (int i = 0; i < n; i++) {
+    	cout << a[i] << " ";
+	}
+	cout << "\n\n";
+
+
+    // Sắp xếp các số nguyên tố về đầu dãy, các số không phải là số nguyên tố về cuối dãy
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (!is_prime(a[i]) && is_prime(a[j])) {
+                swap(a[i], a[j]);
+            }
+        }
+    }
+
+    // In ra kết quả sau khi sắp xếp
+	cout << "Câu D. \n";
+    cout << "Kết quả sau khi sắp xếp: ";
+    for (int i = 0; i < n; i++) {
+        cout << a[i] << " ";
+    }
+
+	cout << "\n\n";
+
+    // Tính trung bình cộng các số chia hết cho 3 có trong dãy
+    int cnt = 0; // Số lượng số chia hết cho 3
+    int sum = 0; // Tổng các số chia hết cho 3
+    for (int i = 0; i < n; i++)
+        if (a[i] % 3 == 0)
+        {
+            cnt++;
+            sum += a[i];
+        }
+	cout << "Câu E. \n";
+    if (cnt == 0) cout << "Không có số nào chia hết cho 3" << endl;
+    else cout << "Trung bình cộng các số chia hết cho 3: " << (double)sum / cnt << endl;
+
+    return 0;
+}
